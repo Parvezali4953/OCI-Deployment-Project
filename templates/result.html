@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html><body>
+<h1>🌦️ {{ weather.city if weather else 'Weather' }}</h1>
+{% if weather %}
+    <p>🌡️ {{ "%.1f"|format(weather.temperature) }}°C</p>
+    <p>☁️ {{ weather.description|title }}</p>
+    <p>💧 {{ weather.humidity }}% humidity</p>
+    <p>💨 {{ weather.wind_speed }} m/s wind</p>
+    <a href="/">← Check another city</a>
+{% else %}
+    <p style="color:red">{{ error }}</p>
+    <a href="/">← Try again</a>
+{% endif %}
+</body></html>
