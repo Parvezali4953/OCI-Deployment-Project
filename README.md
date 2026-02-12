@@ -16,14 +16,14 @@ VCN 10.0.0.0/16 + Security Lists (TCP/80) + firewalld
 | Access Method | URL | Status |
 |---------------|-----|--------|
 | **Load Balancer** | http://80.225.200.198 | ✅ Backend OK (terminated to save costs) |
-| **Direct VM** | http://80.225.224.206 | ✅ LIVE FOREVER (Always Free) |
+| **Direct VM** | http://80.225.224.206 | ✅ Terminated to save costs |
 <img width="905" height="190" alt="{341EADB0-EA61-4E2E-9760-7C69152C9ADC}" src="https://github.com/user-attachments/assets/bcc3af66-98e8-4523-b33b-7687af972dd7" />
 
 
 ## 🛠️ Production Deployment (Copy-Paste)
 
 ```bash
-# 1. Linux Server Setup (OCI VM.Standard.A1.Flex)
+# 1. Linux Server Setup
 sudo yum install podman git -y
 
 # 2. Clone & Deploy
@@ -49,20 +49,18 @@ curl localhost/                # WeatherApp HTML ✓
 
 ## 📊 OCI INFRASTRUCTURE SPEC
 
-| Component | Configuration | Cost | Status |
-|-----------|---------------|------|--------|
-| **Linux VM** | VM.Standard.E3.Flex (1 OCPU/16GB) | **FREE** | ✅ Running |
-| **Networking** | VCN 10.0.0.0/16 + Public Subnet | **FREE** | ✅ Port 80 |
-| **Container** | Podman weatherapp:prod | **FREE** | ✅ 0.0.0.0:80->80 |
-| **Load Balancer** | Flexible Shape (10Mbps) | **₹25/hr → TERMINATED** | ✅ Demo Complete |
-| **Storage** | 50GB Block Volume | **FREE** | Ready |
-
-**Total Running Cost: ₹0** *(Always Free Tier)*
+| Component | Configuration | Status |
+|-----------|---------------|--------|
+| **Linux VM** | VM.Standard.E3.Flex (1 OCPU/16GB) | ✅ Running |
+| **Networking** | VCN 10.0.0.0/16 + Public Subnet | ✅ Port 80 |
+| **Container** | Podman weatherapp:prod | ✅ 0.0.0.0:80->80 |
+| **Load Balancer** | Flexible Shape (10Mbps) | ✅ Demo Complete |
+| **Storage** | 50GB Block Volume | Ready |
 
 ## 🚀 Quick Start (Anyone Can Deploy)
 
 ```bash
-git clone OCI-Deployment-Project
+git clone https://github.com/Parvezali4953/OCI-Deployment-Project.git
 cd OCI-Deployment-Project/app
 podman build -t weatherapp .
 podman run -d -p 80:80 weatherapp
