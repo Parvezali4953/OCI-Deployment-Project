@@ -13,10 +13,10 @@ VCN 10.0.0.0/16 + Security Lists (TCP/80) + firewalld
 ```
 
 ## ✅ PRODUCTION STATUS
-| Access Method | URL | Status |
-|---------------|-----|--------|
-| **Load Balancer** | http://80.225.200.198 | ✅ Backend OK (terminated to save costs) |
-| **Direct VM** | http://80.225.224.206 | ✅ Terminated to save costs |
+| Access Method | URL | Status | Database |
+|---------------|-----|--------|----------|
+| **Load Balancer** | http://80.225.200.198 | ✅ Backend OK | **SQLite Active** |
+| **Direct VM** | http://80.225.224.206 | ✅ Working | **Data Persisted** |
 <img width="905" height="190" alt="{341EADB0-EA61-4E2E-9760-7C69152C9ADC}" src="https://github.com/user-attachments/assets/bcc3af66-98e8-4523-b33b-7687af972dd7" />
 
 
@@ -56,6 +56,42 @@ curl localhost/                # WeatherApp HTML ✓
 | **Container** | Podman weatherapp:prod | ✅ 0.0.0.0:80->80 |
 | **Load Balancer** | Flexible Shape (10Mbps) | ✅ Demo Complete |
 | **Storage** | 50GB Block Volume | Ready |
+
+## 🗄️ CLOUD DATABASE
+
+**✅ Production SQLite Database Implementation**
+
+| Feature | Status | Rackspace Keyword |
+|---------|--------|------------------|
+| **SQLAlchemy ORM** | ✅ WeatherRecord model | SQL Fundamentals |
+| **DDL Creation** | ✅ Auto table creation | Database Design |
+| **DML Persistence** | ✅ Every query → INSERT | Data Manipulation |
+| **Health Monitoring** | ✅ `{"db_connected":true}` | Performance Monitoring |
+| **Production Ready** | ✅ Live DB writes | Backup/Recovery Ready |
+
+**Live Database Demo:**
+
+curl localhost/health
+
+<img width="859" height="36" alt="{1A97E978-55DE-405C-922C-02BDB78DE5E5}" src="https://github.com/user-attachments/assets/dbb6fbaa-1083-4cdd-b974-a46da0d4adb7" />
+
+curl -X POST http://localhost/weather -d "city=Mumbai"
+
+<img width="926" height="209" alt="{8EF9778D-85F6-42D1-AFAE-56655588FA38}" src="https://github.com/user-attachments/assets/6d7e2fcb-464f-4290-a1f1-1d9736d61b5c" />
+
+Database Schema:
+```bash
+CREATE TABLE weather_record (
+    id INTEGER PRIMARY KEY,
+    city VARCHAR(50) NOT NULL,
+    temperature FLOAT NOT NULL,
+    description VARCHAR(100),
+    humidity INTEGER,
+    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+Production Stack: OCI Console → VCN → Load Balancer → Linux VM → Podman → SQLite DB
 
 ## 🚀 Quick Start (Anyone Can Deploy)
 
